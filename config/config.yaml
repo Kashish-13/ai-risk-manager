@@ -1,0 +1,31 @@
+project:
+  random_seed: 42
+data:
+  raw_dir: data/raw
+  processed_dir: data/processed
+  primary_file: data/raw/creditcard_openml_1597.csv
+  target_column: Class
+  time_column: Time
+  amount_column: Amount
+split:
+  test_size: 0.20
+  validation_size: 0.20
+  stratify: true
+data_quality:
+  duplicate_handling: retain
+risk_thresholds:
+  low_max: 29
+  medium_max: 59
+  high_max: 84
+models:
+  logistic_regression:
+    C: 1.0
+    max_iter: 2000
+    class_weight: balanced
+  xgboost:
+    n_estimators: 400
+    max_depth: 5
+    learning_rate: 0.05
+    subsample: 0.8
+    colsample_bytree: 0.8
+    eval_metric: logloss
