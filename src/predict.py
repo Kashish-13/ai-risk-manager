@@ -11,7 +11,6 @@ import numpy as np
 import pandas as pd
 
 from src.risk_engine import RiskAssessment, probability_to_risk
-from src.features import engineer_features
 
 
 class ProbabilityModel(Protocol):
@@ -39,7 +38,7 @@ def score_transactions(
     frame: pd.DataFrame,
     *,
     expected_columns: list[str],
-    thresholds: dict[str, int],
+    thresholds: dict[str, float],
 ) -> list[RiskAssessment]:
     """Return one risk assessment per validated transaction without mutating input."""
     validated = validate_prediction_input(frame, expected_columns)
@@ -58,9 +57,8 @@ def load_prediction_artifacts(models_dir: Path | str) -> tuple[ProbabilityModel,
     return model, metadata, threshold
 
 
-def score_raw_transactions(model: ProbabilityModel, raw_frame: pd.DataFrame, metadata: dict, thresholds: dict[str, int]) -> list[RiskAssessment]:
-    """Engineer supported transaction features then score rows with a saved pipeline."""
+def score_raw_transactions(model: ProbabilityModel, raw_frame: pd.DataFrame, metadata: dict, thresholds: dict[str, float]) -> list[RiskAssessment]:
+    """Score raw rows; the saved pipeline owns feature engineering and preprocessing."""
     required = metadata["raw_feature_columns"]
     validated_raw = validate_prediction_input(raw_frame, required)
-    engineered = engineer_features(validated_raw)
-    return score_transactions(model, engineered, expected_columns=metadata["engineered_feature_columns"], thresholds=thresholds)
+    return score_transactions(model, validated_raw, expected_columns=required, thresholds=thresholds)

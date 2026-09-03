@@ -22,7 +22,7 @@ class ProjectConfig:
     amount_column: str
     test_size: float
     validation_size: float
-    risk_thresholds: dict[str, int]
+    risk_thresholds: dict[str, float]
     model_params: dict[str, dict[str, Any]]
     raw_dir: Path
     processed_dir: Path
@@ -55,7 +55,7 @@ def load_config(path: Path | None = None) -> ProjectConfig:
         amount_column=str(data["amount_column"]),
         test_size=float(split["test_size"]),
         validation_size=float(split["validation_size"]),
-        risk_thresholds={key: int(value) for key, value in raw["risk_thresholds"].items()},
+        risk_thresholds={key: float(value) for key, value in raw["risk_thresholds"].items()},
         model_params=dict(raw["models"]),
         raw_dir=_project_path(data["raw_dir"]),
         processed_dir=_project_path(data["processed_dir"]),

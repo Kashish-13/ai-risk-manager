@@ -14,9 +14,9 @@ split:
 data_quality:
   duplicate_handling: retain
 risk_thresholds:
-  low_max: 29
-  medium_max: 59
-  high_max: 84
+  low_max: 29.99
+  medium_max: 59.99
+  high_max: 79.99
 models:
   logistic_regression:
     C: 1.0

@@ -1,0 +1,7 @@
+{
+  "fraud_decision_threshold": 0.9377919435501099,
+  "selection_rule": "maximum validation F1; tie-breaker: higher validation recall",
+  "validation_f1_at_selected_threshold": 0.8617021276595745,
+  "validation_precision_at_selected_threshold": 0.9101123595505618,
+  "validation_recall_at_selected_threshold": 0.8181818181818182
+}

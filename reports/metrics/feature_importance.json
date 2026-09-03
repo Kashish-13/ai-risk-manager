@@ -1,0 +1,105 @@
+{
+  "wording": "Top risk indicators associated with this model prediction; importance is not causation.",
+  "features": [
+    {
+      "feature": "numeric__V14",
+      "importance": 0.4029078781604767,
+      "importance_source": "model_feature_importance"
+    },
+    {
+      "feature": "numeric__V10",
+      "importance": 0.09683457016944885,
+      "importance_source": "model_feature_importance"
+    },
+    {
+      "feature": "numeric__V4",
+      "importance": 0.07680478692054749,
+      "importance_source": "model_feature_importance"
+    },
+    {
+      "feature": "numeric__V20",
+      "importance": 0.03760272264480591,
+      "importance_source": "model_feature_importance"
+    },
+    {
+      "feature": "numeric__Amount_sqrt",
+      "importance": 0.037411466240882874,
+      "importance_source": "model_feature_importance"
+    },
+    {
+      "feature": "numeric__V12",
+      "importance": 0.028084497898817062,
+      "importance_source": "model_feature_importance"
+    },
+    {
+      "feature": "numeric__V19",
+      "importance": 0.024009626358747482,
+      "importance_source": "model_feature_importance"
+    },
+    {
+      "feature": "numeric__V8",
+      "importance": 0.020766595378518105,
+      "importance_source": "model_feature_importance"
+    },
+    {
+      "feature": "numeric__V17",
+      "importance": 0.019216744229197502,
+      "importance_source": "model_feature_importance"
+    },
+    {
+      "feature": "numeric__Amount_squared",
+      "importance": 0.017194602638483047,
+      "importance_source": "model_feature_importance"
+    },
+    {
+      "feature": "numeric__V21",
+      "importance": 0.016734343022108078,
+      "importance_source": "model_feature_importance"
+    },
+    {
+      "feature": "numeric__V28",
+      "importance": 0.015960415825247765,
+      "importance_source": "model_feature_importance"
+    },
+    {
+      "feature": "numeric__V18",
+      "importance": 0.014618845656514168,
+      "importance_source": "model_feature_importance"
+    },
+    {
+      "feature": "numeric__V5",
+      "importance": 0.014250261709094048,
+      "importance_source": "model_feature_importance"
+    },
+    {
+      "feature": "numeric__V13",
+      "importance": 0.013489468023180962,
+      "importance_source": "model_feature_importance"
+    },
+    {
+      "feature": "numeric__V7",
+      "importance": 0.013261648826301098,
+      "importance_source": "model_feature_importance"
+    },
+    {
+      "feature": "numeric__Amount_log1p",
+      "importance": 0.013016401790082455,
+      "importance_source": "model_feature_importance"
+    },
+    {
+      "feature": "numeric__V11",
+      "importance": 0.012533505447208881,
+      "importance_source": "model_feature_importance"
+    },
+    {
+      "feature": "numeric__V3",
+      "importance": 0.012111921794712543,
+      "importance_source": "model_feature_importance"
+    },
+    {
+      "feature": "numeric__Amount",
+      "importance": 0.011928043328225613,
+      "importance_source": "model_feature_importance"
+    }
+  ]
+}

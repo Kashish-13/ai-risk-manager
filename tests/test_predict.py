@@ -10,7 +10,7 @@ class DummyModel:
         return np.column_stack([np.repeat(0.9, len(X)), np.repeat(0.1, len(X))])
 
 
-THRESHOLDS = {"low_max": 29, "medium_max": 59, "high_max": 84}
+THRESHOLDS = {"low_max": 29.99, "medium_max": 59.99, "high_max": 79.99}
 
 
 def test_prediction_contract_returns_one_assessment_per_input() -> None:
@@ -25,4 +25,3 @@ def test_prediction_contract_returns_one_assessment_per_input() -> None:
 def test_prediction_contract_rejects_schema_mismatch() -> None:
     with pytest.raises(ValueError, match="missing columns"):
         validate_prediction_input(pd.DataFrame({"Time": [1.0]}), ["Time", "Amount"])
-

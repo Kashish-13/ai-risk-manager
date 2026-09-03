@@ -21,7 +21,6 @@ from src.config import load_config
 from src.data_loader import load_csv, split_features_target
 from src.evaluate import evaluate_predictions, save_comparison_plot, save_evaluation_plots, save_threshold_plot, select_f1_threshold
 from src.explain import ranked_feature_importance
-from src.features import engineer_features
 from src.preprocessing import split_train_validation_test
 from src.train import build_logistic_pipeline, build_xgboost_pipeline, class_imbalance_weight
 from src.validation import validate_dataframe
@@ -57,9 +56,8 @@ def run_training(data_path: Path) -> dict[str, Any]:
     if handling != "retain":
         raise ValueError(f"Unsupported duplicate handling '{handling}'; only 'retain' is currently implemented.")
     X_raw, y = split_features_target(frame, config.target_column)
-    X = engineer_features(X_raw, time_column=config.time_column, amount_column=config.amount_column)
     duplicate_groups = pd.util.hash_pandas_object(X_raw, index=False)
-    splits = split_train_validation_test(X, y, test_size=config.test_size, validation_size=config.validation_size, random_seed=config.random_seed, stratify=True, groups=duplicate_groups)
+    splits = split_train_validation_test(X_raw, y, test_size=config.test_size, validation_size=config.validation_size, random_seed=config.random_seed, stratify=True, groups=duplicate_groups)
     train_weight = class_imbalance_weight(splits.y_train)
 
     baseline = build_logistic_pipeline(splits.X_train, config.model_params["logistic_regression"])
@@ -97,7 +95,8 @@ def run_training(data_path: Path) -> dict[str, Any]:
     models_dir.mkdir(exist_ok=True); metrics_dir.mkdir(parents=True, exist_ok=True); figures_dir.mkdir(parents=True, exist_ok=True)
     joblib.dump(final_pipeline, models_dir / "final_model.joblib")
     joblib.dump(final_pipeline.named_steps["preprocessing"], models_dir / "preprocessing.joblib")
-    metadata = {"dataset": str(data_path), "dataset_rows": len(frame), "target_column": config.target_column, "raw_feature_columns": X_raw.columns.tolist(), "engineered_feature_columns": X.columns.tolist(), "random_seed": config.random_seed, "duplicate_handling": handling, "duplicate_summary": duplicate_summary, "split_method": "stratified_group_split_by_identical_feature_rows", "split_sizes": {"train": len(splits.X_train), "validation": len(splits.X_validation), "test": len(splits.X_test)}, "split_fraud_counts": {"train": int(splits.y_train.sum()), "validation": int(splits.y_validation.sum()), "test": int(splits.y_test.sum())}, "model": model_name, "selection_note": selection_note, "class_imbalance_weight_from_train": train_weight, "threshold_selection": threshold_details}
+    engineered_columns = final_pipeline.named_steps["feature_engineering"].transform(splits.X_train.head(1)).columns.tolist()
+    metadata = {"dataset": "OpenML dataset 1597", "dataset_rows": len(frame), "dataset_fraud_count": int(y.sum()), "target_column": config.target_column, "raw_feature_columns": X_raw.columns.tolist(), "engineered_feature_columns": engineered_columns, "random_seed": config.random_seed, "duplicate_handling": handling, "duplicate_summary": duplicate_summary, "split_method": "stratified_group_split_by_identical_feature_rows", "split_sizes": {"train": len(splits.X_train), "validation": len(splits.X_validation), "test": len(splits.X_test)}, "split_fraud_counts": {"train": int(splits.y_train.sum()), "validation": int(splits.y_validation.sum()), "test": int(splits.y_test.sum())}, "model": model_name, "selection_note": selection_note, "class_imbalance_weight_from_train": train_weight, "threshold_selection": threshold_details}
     _write_json(models_dir / "model_metadata.json", metadata)
     _write_json(models_dir / "threshold.json", {"fraud_decision_threshold": threshold, **threshold_details})
     _write_json(metrics_dir / "validation_metrics.json", {"baseline_logistic_regression": baseline_metrics, "selected_model": model_name, "selected_model_validation": final_validation, "threshold_selection": threshold_details})
@@ -105,6 +104,16 @@ def run_training(data_path: Path) -> dict[str, Any]:
     _write_json(metrics_dir / "classification_report.json", {"label": "HELD-OUT TEST SET RESULTS", **test_metrics["classification_report"]})
     _write_json(metrics_dir / "model_comparison.json", {"primary_selection_metric": "PR-AUC", "validation_only": comparison, "selected_model": model_name, "selection_note": selection_note})
     _write_json(metrics_dir / "feature_importance.json", {"wording": "Top risk indicators associated with this model prediction; importance is not causation.", "features": ranked_feature_importance(final_pipeline).to_dict(orient="records")})
+    demo_payload = {}
+    for label, name, chooser in ((0, "low_risk", np.argmin), (1, "high_risk", np.argmax)):
+        positions = np.flatnonzero(splits.y_test.to_numpy() == label)
+        selected = int(positions[chooser(test_probabilities[positions])])
+        demo_payload[name] = {
+            "source": "held-out test set (saved after final evaluation; inference demo only)",
+            "actual_label": int(label),
+            "features": {key: float(value) for key, value in splits.X_test.iloc[selected].items()},
+        }
+    _write_json(models_dir / "demo_samples.json", demo_payload)
     save_evaluation_plots(splits.y_test.to_numpy(), test_probabilities, threshold, figures_dir)
     save_comparison_plot(comparison, figures_dir / "model_comparison.png")
     save_threshold_plot(splits.y_validation.to_numpy(), final_probabilities, threshold, figures_dir / "risk_threshold_analysis.png")

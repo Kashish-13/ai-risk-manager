@@ -4,8 +4,10 @@ from __future__ import annotations
 from typing import Any
 
 from sklearn.linear_model import LogisticRegression
+from sklearn.preprocessing import FunctionTransformer
 from sklearn.pipeline import Pipeline
 
+from src.features import engineer_features
 from src.preprocessing import build_preprocessor
 
 
@@ -16,8 +18,10 @@ def build_logistic_regression(*, C: float, max_iter: int, class_weight: str | No
 
 def build_logistic_pipeline(X_train, parameters: dict[str, Any]) -> Pipeline:
     """Create an unfitted baseline pipeline; it must be fit on training rows only."""
+    engineered_train = engineer_features(X_train)
     return Pipeline([
-        ("preprocessing", build_preprocessor(X_train)),
+        ("feature_engineering", FunctionTransformer(engineer_features, validate=False)),
+        ("preprocessing", build_preprocessor(engineered_train)),
         ("classifier", build_logistic_regression(**parameters)),
     ])
 
@@ -35,7 +39,12 @@ def build_xgboost_pipeline(X_train, parameters: dict[str, Any], *, scale_pos_wei
         n_jobs=-1,
         tree_method="hist",
     )
-    return Pipeline([("preprocessing", build_preprocessor(X_train)), ("classifier", classifier)])
+    engineered_train = engineer_features(X_train)
+    return Pipeline([
+        ("feature_engineering", FunctionTransformer(engineer_features, validate=False)),
+        ("preprocessing", build_preprocessor(engineered_train)),
+        ("classifier", classifier),
+    ])
 
 
 def class_imbalance_weight(y_train) -> float:
