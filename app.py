@@ -1,4 +1,4 @@
-﻿"""Premium Streamlit interface for the trained AI Risk Manager."""
+"""Premium Streamlit interface for the trained AI Risk Manager."""
 from __future__ import annotations
 
 import html
@@ -20,14 +20,14 @@ METRICS = ROOT / "reports" / "metrics"
 FIGURES = ROOT / "reports" / "figures"
 PAGES = ["Overview", "Transaction Risk Checker", "Risk Analytics", "Explainability", "Model Performance", "About"]
 
-st.set_page_config(page_title="AI Risk Manager", page_icon="â—ˆ", layout="wide", initial_sidebar_state="expanded")
+st.set_page_config(page_title="AI Risk Manager", page_icon="◈", layout="wide", initial_sidebar_state="expanded")
 st.markdown(
     """
 <style>
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap');
 :root{--bg:#070a0f;--surface:#0e141d;--surface-2:#121a25;--border:rgba(255,255,255,.075);--text:#f4f7fb;--muted:#8e9aad;--red:#ff5b5b;--purple:#8b73ff;--green:#38d9a9;--amber:#f8c15c;--orange:#ff8a4c}
 html,body,[class*="css"]{font-family:'DM Sans',sans-serif}.stApp{background:radial-gradient(900px 480px at 85% -10%,rgba(130,78,255,.13),transparent 62%),radial-gradient(700px 420px at 10% 0,rgba(255,91,91,.08),transparent 65%),var(--bg);color:var(--text)}
-[data-testid="stHeader"]{background:transparent;height:2rem}#MainMenu,footer{visibility:hidden}.block-container{max-width:1240px;padding-top:1.5rem;padding-bottom:3rem}
+[data-testid="stHeader"]{background:transparent;height:2rem}[data-testid="stToolbar"],#MainMenu,footer{visibility:hidden}.block-container{max-width:1240px;padding-top:1.5rem;padding-bottom:3rem}
 [data-testid="stSidebar"]{background:linear-gradient(180deg,#0c1119,#080c12);border-right:1px solid var(--border)}[data-testid="stSidebar"]>div{padding-top:1.25rem}
 .brand{padding:12px 8px 22px}.brand-mark{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(135deg,var(--red),#c9498d);box-shadow:0 8px 28px rgba(255,91,91,.25);font:800 19px Manrope;color:white;margin-bottom:14px}.brand-name{font:800 17px Manrope;letter-spacing:.07em}.brand-sub{color:var(--muted);font-size:12px;margin-top:3px}
 .online{display:flex;align-items:center;gap:9px;margin:10px 8px 20px;padding:10px 12px;border:1px solid rgba(56,217,169,.16);background:rgba(56,217,169,.055);border-radius:12px;color:#a7ead7;font-size:11px;font-weight:700;letter-spacing:.08em}.online-dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 0 5px rgba(56,217,169,.09)}
@@ -37,7 +37,7 @@ h1,h2,h3{font-family:'Manrope',sans-serif;letter-spacing:-.035em}.eyebrow{font-s
 .section-title{display:flex;align-items:center;gap:12px;margin:34px 0 14px;color:#dce3ec;font:700 12px Manrope;letter-spacing:.13em;text-transform:uppercase}.section-title:after{content:"";height:1px;background:var(--border);flex:1}
 .kpi-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px}.kpi-grid.five{grid-template-columns:repeat(5,minmax(0,1fr))}.kpi{position:relative;overflow:hidden;min-height:142px;padding:19px;border:1px solid var(--border);border-radius:17px;background:linear-gradient(145deg,rgba(19,27,39,.98),rgba(13,19,28,.98));box-shadow:0 12px 34px rgba(0,0,0,.13);transition:transform .2s,border-color .2s}.kpi:hover{transform:translateY(-3px);border-color:rgba(255,91,91,.25)}.kpi:before{content:"";position:absolute;top:0;left:19px;width:36px;height:2px;background:var(--accent,var(--red))}.kpi-label{color:#8e9aad;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}.kpi-value{font:800 clamp(1.45rem,2.7vw,2.1rem) Manrope;color:#f8fafc;margin:18px 0 7px;white-space:nowrap}.kpi-note{color:#6f7c8f;font-size:11px;line-height:1.35}.kpi-icon{position:absolute;right:16px;top:14px;color:var(--accent,var(--red));font-size:15px;opacity:.75}
 .mini-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.mini{padding:17px 18px;border:1px solid var(--border);border-radius:15px;background:rgba(16,23,33,.8)}.mini-label{color:#7f8b9c;font-size:11px;text-transform:uppercase;letter-spacing:.08em}.mini-value{font:750 1.35rem Manrope;margin-top:9px;color:#eef3f9}
-.pipeline{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.pipe{position:relative;padding:21px 18px;border-radius:17px;border:1px solid var(--border);background:linear-gradient(145deg,#111925,#0d131c)}.pipe:not(:last-child):after{content:"â€º";position:absolute;right:-10px;top:36%;z-index:2;width:20px;height:20px;display:grid;place-items:center;border-radius:50%;background:#1d2633;color:#ff7777;font-weight:800}.pipe-num{color:#ff6c6c;font:800 11px Manrope;letter-spacing:.1em}.pipe h4{font:700 16px Manrope;margin:12px 0 5px}.pipe p{color:#7f8b9c;font-size:12px;margin:0}
+.pipeline{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.pipe{position:relative;padding:21px 18px;border-radius:17px;border:1px solid var(--border);background:linear-gradient(145deg,#111925,#0d131c)}.pipe:not(:last-child):after{content:"›";position:absolute;right:-10px;top:36%;z-index:2;width:20px;height:20px;display:grid;place-items:center;border-radius:50%;background:#1d2633;color:#ff7777;font-weight:800}.pipe-num{color:#ff6c6c;font:800 11px Manrope;letter-spacing:.1em}.pipe h4{font:700 16px Manrope;margin:12px 0 5px}.pipe p{color:#7f8b9c;font-size:12px;margin:0}
 .feature-row{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.feature{padding:19px;border:1px solid var(--border);border-radius:16px;background:#0e151f}.feature b{display:block;font:700 14px Manrope;margin-bottom:7px}.feature span{color:#7e8a9b;font-size:12px;line-height:1.45}
 .sample-card{padding:16px 18px;border-radius:16px;border:1px solid var(--border);background:linear-gradient(120deg,rgba(255,91,91,.06),rgba(139,115,255,.045));margin-bottom:14px}.sample-card b{font:700 14px Manrope}.sample-card p{color:var(--muted);font-size:12px;margin:5px 0 0}
 [data-testid="stForm"]{border:1px solid var(--border);border-radius:20px;background:rgba(14,20,29,.82);padding:22px}[data-testid="stNumberInput"] input{border-radius:11px;background:#0a1018;border-color:rgba(255,255,255,.09)}div[data-testid="stExpander"]{border:1px solid var(--border);border-radius:14px;background:#0b1119;margin-top:9px}
@@ -133,7 +133,7 @@ if artifact_error:
     st.sidebar.error("MODEL UNAVAILABLE")
 else:
     st.sidebar.markdown('<div class="online"><span class="online-dot"></span> MODEL ONLINE</div>', unsafe_allow_html=True)
-    st.sidebar.caption(f"{metadata['model']} Â· threshold {threshold:.4f}")
+    st.sidebar.caption(f"{metadata['model']} · threshold {threshold:.4f}")
 
 if artifact_error:
     page_header("Model artifacts unavailable", "The interface loaded safely, but prediction assets could not be read.")
@@ -147,11 +147,11 @@ test_total, test_fraud = tn + fp + fn + tp, tp + fn
 capture = tp / test_fraud if test_fraud else 0.0
 
 metric_items = [
-    ("PR-AUC", f"{test_metrics['pr_auc']:.2%}", "Performance on the rare fraud class", "#ff5b5b", "â—«"),
-    ("ROC-AUC", f"{test_metrics['roc_auc']:.2%}", "Overall ranking quality", "#8b73ff", "â—Œ"),
-    ("Precision", f"{test_metrics['precision']:.2%}", "Accuracy of fraud alerts", "#38d9a9", "âœ“"),
-    ("Recall", f"{test_metrics['recall']:.2%}", "Share of fraud cases detected", "#f8c15c", "â†—"),
-    ("F1 Score", f"{test_metrics['f1']:.2%}", "Balance of precision and recall", "#ff8a4c", "â—‡"),
+    ("PR-AUC", f"{test_metrics['pr_auc']:.2%}", "Performance on the rare fraud class", "#ff5b5b", "◫"),
+    ("ROC-AUC", f"{test_metrics['roc_auc']:.2%}", "Overall ranking quality", "#8b73ff", "◌"),
+    ("Precision", f"{test_metrics['precision']:.2%}", "Accuracy of fraud alerts", "#38d9a9", "✓"),
+    ("Recall", f"{test_metrics['recall']:.2%}", "Share of fraud cases detected", "#f8c15c", "↗"),
+    ("F1 Score", f"{test_metrics['f1']:.2%}", "Balance of precision and recall", "#ff8a4c", "◇"),
 ]
 
 if page == "Overview":
@@ -168,7 +168,7 @@ if page == "Overview":
     mini_cards([("Model", metadata["model"]), ("Decision Threshold", f"{threshold:.6f}"), ("Held-out Transactions", f"{test_total:,}"), ("Held-out Fraud Cases", f"{test_fraud:,}")])
     section("Fraud intelligence pipeline")
     st.markdown(
-        '<div class="pipeline"><div class="pipe"><div class="pipe-num">STEP 01</div><h4>Transaction</h4><p>Raw Amount and anonymized V-signals</p></div><div class="pipe"><div class="pipe-num">STEP 02</div><h4>ML Probability</h4><p>XGBoost estimates fraud likelihood</p></div><div class="pipe"><div class="pipe-num">STEP 03</div><h4>Risk Score</h4><p>Probability converted to a 0â€“100 signal</p></div><div class="pipe"><div class="pipe-num">STEP 04</div><h4>Risk Decision</h4><p>Clear review recommendation</p></div></div>',
+        '<div class="pipeline"><div class="pipe"><div class="pipe-num">STEP 01</div><h4>Transaction</h4><p>Raw Amount and anonymized V-signals</p></div><div class="pipe"><div class="pipe-num">STEP 02</div><h4>ML Probability</h4><p>XGBoost estimates fraud likelihood</p></div><div class="pipe"><div class="pipe-num">STEP 03</div><h4>Risk Score</h4><p>Probability converted to a 0–100 signal</p></div><div class="pipe"><div class="pipe-num">STEP 04</div><h4>Risk Decision</h4><p>Clear review recommendation</p></div></div>',
         unsafe_allow_html=True,
     )
     section("Dataset overview")
@@ -196,7 +196,7 @@ elif page == "Transaction Risk Checker":
     with st.form("risk-analysis-form"):
         st.markdown("#### Transaction amount")
         amount = st.number_input("Amount", min_value=0.0, format="%.4f", key="tx_Amount", help="Transaction value from the OpenML dataset schema.")
-        groups = [("Signal group 01 Â· V1â€“V7", range(1, 8)), ("Signal group 02 Â· V8â€“V14", range(8, 15)), ("Signal group 03 Â· V15â€“V21", range(15, 22)), ("Signal group 04 Â· V22â€“V28", range(22, 29))]
+        groups = [("Signal group 01 · V1–V7", range(1, 8)), ("Signal group 02 · V8–V14", range(8, 15)), ("Signal group 03 · V15–V21", range(15, 22)), ("Signal group 04 · V22–V28", range(22, 29))]
         for label, numbers in groups:
             with st.expander(label):
                 columns = st.columns(3)
@@ -228,7 +228,7 @@ elif page == "Risk Analytics":
     page_header("Risk Analytics", "Operational outcomes from the untouched held-out test set.", "HELD-OUT EVALUATION")
     kpi_cards(metric_items)
     section("Confusion matrix summary")
-    kpi_cards([("True Positives", f"{tp:,}", "Fraud correctly detected", "#38d9a9", "âœ“"), ("False Positives", f"{fp:,}", "Legitimate transactions flagged", "#f8c15c", "!"), ("True Negatives", f"{tn:,}", "Legitimate transactions cleared", "#8b73ff", "â—‹"), ("False Negatives", f"{fn:,}", "Fraud cases missed", "#ff5b5b", "Ã—")])
+    kpi_cards([("True Positives", f"{tp:,}", "Fraud correctly detected", "#38d9a9", "✓"), ("False Positives", f"{fp:,}", "Legitimate transactions flagged", "#f8c15c", "!"), ("True Negatives", f"{tn:,}", "Legitimate transactions cleared", "#8b73ff", "○"), ("False Negatives", f"{fn:,}", "Fraud cases missed", "#ff5b5b", "×")])
     chart_col, capture_col = st.columns([1.35, 1])
     with chart_col:
         section("Actual confusion matrix")
@@ -253,7 +253,7 @@ elif page == "Explainability":
     st.markdown('<div class="chart-card">', unsafe_allow_html=True); st.pyplot(fig, width="stretch"); st.markdown('</div>', unsafe_allow_html=True)
     st.markdown('<div class="callout"><b>Important</b><br>Feature importance represents model influence and should not be interpreted as causation.</div>', unsafe_allow_html=True)
     section("How to interpret this view")
-    st.markdown('<div class="feature-row"><div class="feature"><b>Anonymized inputs</b><span>V1â€“V28 are PCA-derived signals without disclosed business meanings.</span></div><div class="feature"><b>Relative influence</b><span>Higher importance means the fitted model relied more strongly on that signal globally.</span></div><div class="feature"><b>Not a reason code</b><span>Importance does not prove why a particular transaction was fraudulent.</span></div><div class="feature"><b>Decision support</b><span>Use importance with model performance, threshold context and human review.</span></div></div>', unsafe_allow_html=True)
+    st.markdown('<div class="feature-row"><div class="feature"><b>Anonymized inputs</b><span>V1–V28 are PCA-derived signals without disclosed business meanings.</span></div><div class="feature"><b>Relative influence</b><span>Higher importance means the fitted model relied more strongly on that signal globally.</span></div><div class="feature"><b>Not a reason code</b><span>Importance does not prove why a particular transaction was fraudulent.</span></div><div class="feature"><b>Decision support</b><span>Use importance with model performance, threshold context and human review.</span></div></div>', unsafe_allow_html=True)
 
 elif page == "Model Performance":
     page_header("Model Performance", "Judge-ready evidence from the final held-out test evaluation.", "BUILDATHON RESULTS")
@@ -262,7 +262,7 @@ elif page == "Model Performance":
     section("Evaluation curves")
     left, right = st.columns(2)
     with left:
-        st.markdown('<div class="chart-card"><div class="eyebrow">PRECISIONâ€“RECALL CURVE</div>', unsafe_allow_html=True)
+        st.markdown('<div class="chart-card"><div class="eyebrow">PRECISION–RECALL CURVE</div>', unsafe_allow_html=True)
         st.image(str(FIGURES / "precision_recall_curve.png"), width="stretch"); st.markdown('</div>', unsafe_allow_html=True)
     with right:
         st.markdown('<div class="chart-card"><div class="eyebrow">ROC CURVE</div>', unsafe_allow_html=True)
@@ -283,9 +283,9 @@ else:
         ("The Problem", "Rare fraud creates direct loss, chargebacks and difficult customer-friction trade-offs."),
         ("The Solution", "A detector that turns model probability into a transparent risk score and review recommendation."),
         ("How It Works", "Validated transaction inputs flow through one saved feature, preprocessing and XGBoost pipeline."),
-        ("Dataset", "OpenML 1597 with anonymized V1â€“V28, Amount, optional Time and the Class label."),
+        ("Dataset", "OpenML 1597 with anonymized V1–V28, Amount, optional Time and the Class label."),
         ("Model Approach", "Group-aware splits, weighted baselines, validation selection and one final held-out evaluation."),
-        ("Risk Scoring", "Fraud probability Ã— 100 mapped to LOW, MEDIUM, HIGH and CRITICAL severity bands."),
+        ("Risk Scoring", "Fraud probability × 100 mapped to LOW, MEDIUM, HIGH and CRITICAL severity bands."),
         ("Explainability", "Actual global fitted-model importance, described as influence rather than causation."),
         ("Limitations", "Historical anonymous data, no merchant context, possible drift, false alerts and missed fraud."),
     ]
@@ -297,8 +297,3 @@ else:
     section("Future roadmap")
     st.markdown('<div class="callout"><b>Next stage</b><br>Temporal validation, probability calibration, drift monitoring, governed thresholds, secure APIs and human-review feedback loops.</div>', unsafe_allow_html=True)
     st.markdown('<div class="callout"><b>Intelligent decision support</b><br>Built as an intelligent decision-support platform, AI Risk Manager combines fraud detection, risk scoring, and model explainability to help identify high-risk transactions with greater speed and clarity.</div>', unsafe_allow_html=True)
-
-
-
-
-
