@@ -20,7 +20,7 @@ METRICS = ROOT / "reports" / "metrics"
 FIGURES = ROOT / "reports" / "figures"
 PAGES = ["Overview", "Transaction Risk Checker", "Risk Analytics", "Explainability", "Model Performance", "About"]
 
-st.set_page_config(page_title="AI Risk Manager", page_icon="â—ˆ", layout="wide", initial_sidebar_state="expanded")
+st.set_page_config(page_title="AI Risk Manager", page_icon="◈", layout="wide", initial_sidebar_state="expanded")
 st.markdown(
     """
 <style>
@@ -147,11 +147,11 @@ test_total, test_fraud = tn + fp + fn + tp, tp + fn
 capture = tp / test_fraud if test_fraud else 0.0
 
 metric_items = [
-    ("PR-AUC", f"{test_metrics['pr_auc']:.2%}", "Performance on the rare fraud class", "#ff5b5b", "â—«"),
-    ("ROC-AUC", f"{test_metrics['roc_auc']:.2%}", "Overall ranking quality", "#8b73ff", "â—Œ"),
+    ("PR-AUC", f"{test_metrics['pr_auc']:.2%}", "Performance on the rare fraud class", "#ff5b5b", "◫"),
+    ("ROC-AUC", f"{test_metrics['roc_auc']:.2%}", "Overall ranking quality", "#8b73ff", "◌"),
     ("Precision", f"{test_metrics['precision']:.2%}", "Accuracy of fraud alerts", "#38d9a9", "✓"),
     ("Recall", f"{test_metrics['recall']:.2%}", "Share of fraud cases detected", "#f8c15c", "↗"),
-    ("F1 Score", f"{test_metrics['f1']:.2%}", "Balance of precision and recall", "#ff8a4c", "â—‡"),
+    ("F1 Score", f"{test_metrics['f1']:.2%}", "Balance of precision and recall", "#ff8a4c", "◇"),
 ]
 
 if page == "Overview":
@@ -228,7 +228,7 @@ elif page == "Risk Analytics":
     page_header("Risk Analytics", "Operational outcomes from the untouched held-out test set.", "HELD-OUT EVALUATION")
     kpi_cards(metric_items)
     section("Confusion matrix summary")
-    kpi_cards([("True Positives", f"{tp:,}", "Fraud correctly detected", "#38d9a9", "✓"), ("False Positives", f"{fp:,}", "Legitimate transactions flagged", "#f8c15c", "!"), ("True Negatives", f"{tn:,}", "Legitimate transactions cleared", "#8b73ff", "â—‹"), ("False Negatives", f"{fn:,}", "Fraud cases missed", "#ff5b5b", "×")])
+    kpi_cards([("True Positives", f"{tp:,}", "Fraud correctly detected", "#38d9a9", "✓"), ("False Positives", f"{fp:,}", "Legitimate transactions flagged", "#f8c15c", "!"), ("True Negatives", f"{tn:,}", "Legitimate transactions cleared", "#8b73ff", "○"), ("False Negatives", f"{fn:,}", "Fraud cases missed", "#ff5b5b", "×")])
     chart_col, capture_col = st.columns([1.35, 1])
     with chart_col:
         section("Actual confusion matrix")
