@@ -1,4 +1,31 @@
-# AI Risk Manager
+# 🛡️ AI Risk Manager
+
+### AI-Powered Fraud Detection & Transaction Risk Intelligence
+
+[🚀 **LIVE DEMO — Launch AI Risk Manager**](https://ai-risk-manager-kashish.streamlit.app/)
+
+[💻 **GitHub Repository**](https://github.com/Kashish-13/ai-risk-manager)
+
+---
+
+AI Risk Manager is an intelligent fraud-risk decision-support platform that analyzes transaction patterns using machine learning and converts fraud probabilities into clear, interpretable risk scores.
+
+Built for the **Razorpay AI Buildathon**, the platform combines fraud detection, risk scoring, analytics, model explainability, and performance evaluation in an interactive fintech dashboard.
+
+### 📊 Model Performance
+
+- **Model:** XGBoost
+- **PR-AUC:** 89.11%
+- **ROC-AUC:** 99.12%
+- **Precision:** 95.29%
+- **Recall / Fraud Capture:** 81.82%
+- **F1 Score:** 88.04%
+- **Held-out Transactions:** 56,962
+- **Fraud Cases:** 99
+- **Fraud Detected:** 81
+
+---
+
 
 A production-style fraud-risk decision-support dashboard created for the Razorpay Buildathon. It analyzes credit-card transaction signals, estimates fraud probability, converts it to a transparent 0–100 risk score, and presents genuine held-out evaluation results in a premium Streamlit interface.
 
