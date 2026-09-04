@@ -1,4 +1,9 @@
 # 🛡️ AI Risk Manager
+## 🎥 5-Minute Project Pitch
+
+Watch the complete AI Risk Manager walkthrough covering the problem statement, solution architecture, GitHub project structure, model evaluation, and live fraud-risk demonstration.
+
+[▶ Watch the 5-Minute Pitch Video](https://www.youtube.com/watch?v=8AYlnYar7vE)
 
 ### AI-Powered Fraud Detection & Transaction Risk Intelligence
 
