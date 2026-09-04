@@ -221,6 +221,62 @@ elif page == "Transaction Risk Checker":
                 unsafe_allow_html=True,
             )
             st.caption("This output is a model-estimated decision-support signal, not proof that fraud occurred.")
+
+            threshold_gap = probability - threshold
+            threshold_gap_pp = abs(threshold_gap) * 100
+            threshold_position = "above" if threshold_gap >= 0 else "below"
+
+            recommended_actions = {
+                "LOW": "Allow normal processing and continue standard monitoring.",
+                "MEDIUM": "Route for light manual review or step-up verification before final approval.",
+                "HIGH": "Hold the transaction and perform additional verification before approval.",
+                "CRITICAL": "Escalate immediately and block or decline pending investigation according to policy.",
+            }
+
+            section("Recommended action")
+            st.markdown(
+                f'<div class="callout"><b>{html.escape(result.category)} risk response</b><br>'
+                f'{html.escape(recommended_actions[result.category])}</div>',
+                unsafe_allow_html=True,
+            )
+
+            section("Investigation summary")
+            mini_cards([
+                ("Risk Category", result.category),
+                ("Fraud Probability", f"{probability:.2%}"),
+                ("Threshold Position", f"{threshold_gap_pp:.2f} pp {threshold_position}"),
+                ("Model Decision", decision),
+            ])
+
+            st.markdown(
+                f'<div class="callout"><b>Threshold context</b><br>'
+                f'The model probability is {threshold_gap_pp:.2f} percentage points {threshold_position} '
+                f'the frozen fraud decision threshold of {threshold:.2%}. '
+                f'This comparison explains the model decision without changing the trained model or threshold.</div>',
+                unsafe_allow_html=True,
+            )
+
+            section("Analysis timeline")
+            st.markdown(
+                '<div class="pipeline">'
+                '<div class="pipe"><div class="pipe-num">01</div><h4>Validate input</h4><p>Amount and anonymized V-signals are checked against the saved schema.</p></div>'
+                '<div class="pipe"><div class="pipe-num">02</div><h4>Estimate probability</h4><p>The saved XGBoost pipeline calculates fraud probability.</p></div>'
+                '<div class="pipe"><div class="pipe-num">03</div><h4>Map risk</h4><p>Probability is converted into the existing 0–100 risk score and severity band.</p></div>'
+                '<div class="pipe"><div class="pipe-num">04</div><h4>Support review</h4><p>The frozen threshold and risk band guide the recommended next action.</p></div>'
+                '</div>',
+                unsafe_allow_html=True,
+            )
+
+            with st.expander("Investigation details"):
+                st.write(f"Transaction amount: {amount:.4f}")
+                st.write(f"Input features evaluated: {len(raw_columns)}")
+                st.write(f"Fraud probability: {probability:.6f}")
+                st.write(f"Frozen decision threshold: {threshold:.6f}")
+                st.write(f"Threshold comparison: {threshold_gap_pp:.4f} percentage points {threshold_position}")
+                if st.session_state.get("demo_name"):
+                    st.write(f"Loaded demo: {st.session_state.demo_name}")
+                st.caption("V1–V28 are anonymized PCA-derived signals; the interface does not assign business meanings to them.")
+
         except (ValueError, KeyError, TypeError) as exc:
             st.error(f"Unable to analyze this transaction: {exc}")
 
