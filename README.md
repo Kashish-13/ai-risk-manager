@@ -23,7 +23,6 @@ Built for the **Razorpay AI Buildathon**, the platform combines fraud detection,
 - **Precision:** 95.29%
 - **Recall / Fraud Capture:** 81.82%
 - **F1 Score:** 88.04%
-- **Held-out Transactions:** 56,962
 - **Fraud Cases:** 99
 - **Fraud Detected:** 81
 
