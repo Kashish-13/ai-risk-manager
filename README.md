@@ -74,7 +74,7 @@ The project downloads [OpenML dataset 1597](https://www.openml.org/d/1597), the 
 
 - No merchant, customer, location, device, browser, or transaction-history features are invented.
 - Missing values, numeric validity, duplicates, and class distribution are reported before training.
-- The benchmark is severely imbalanced, so accuracy is not the primary metric.
+
 
 
 ## Machine-learning pipeline
