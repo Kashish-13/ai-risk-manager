@@ -76,7 +76,6 @@ The project downloads [OpenML dataset 1597](https://www.openml.org/d/1597), the 
 - Missing values, numeric validity, duplicates, and class distribution are reported before training.
 - The benchmark is severely imbalanced, so accuracy is not the primary metric.
 
-Raw data is reproducibly downloaded and excluded from Git.
 
 ## Machine-learning pipeline
 
